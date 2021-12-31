@@ -1,0 +1,141 @@
+//-------------------------- 12/27/2021 -- 20:51:50 -----
+Processor Init:
+   AMD Phenom, ~4.00 Ghz
+   FPU detected
+   MMX detected
+   SSE detected
+   SSE2 detected
+   HT detected
+   MP detected [12 cores, 24 logical, 1 physical]
+ 
+Math Init:
+   Installing Standard C extensions
+   Installing Assembly extensions
+   Installing FPU extensions
+   Installing MMX extensions
+   Installing SSE extensions
+ 
+Initializing platform...
+Input Init:
+   keyboard0 input device created.
+   mouse0 input device created.
+   DirectInput enabled.
+
+Done
+DebugDrawer Enabled!
+GFX Init:
+   Null device found
+   Direct 3D (version 11.x) device found
+   Direct 3D (version 9.x) device found
+   OpenGL device found
+
+GFXStringEnumTranslate: Unassigned value in GFXStringTextureFormat: 22
+GFXStringEnumTranslate: Unassigned value in GFXStringTextureFormat: 23
+--------- Loading DIRS ---------
+
+--------- Parsing Arguments ---------
+UDP initialized on ipv4 IP:0.0.0.0:49363
+Attempting to create GFX device: NVIDIA GeForce RTX 2080 SUPER (D3D11) []
+Device created, setting adapter and enumerating modes
+Hardware occlusion query detected: Yes
+WMIVideoInfo: DxDiag initialized
+Initializing GFXCardProfiler (Direct3D11)
+   o Chipset : 'NVIDIA'
+   o Card    : 'NVIDIA GeForce RTX 2080 SUPER'
+   o Version : 'Feature level 11.0'
+   o VRAM    : 3072 MB
+   - Scanning card capabilities...
+GFXCardProfiler (Direct3D11) - Setting capability 'maxTextureWidth' to 16384.
+GFXCardProfiler (Direct3D11) - Setting capability 'maxTextureHeight' to 16384.
+GFXCardProfiler (Direct3D11) - Setting capability 'maxTextureSize' to 16384.
+   - Loading card profiles...
+      - No card profile core/profile/Direct3D11.cs exists
+      - No card profile core/profile/Direct3D11.NVIDIA.cs exists
+      - No card profile core/profile/Direct3D11.NVIDIA.NVIDIAGeForceRTX2080SUPER.cs exists
+      - No card profile core/profile/Direct3D11.NVIDIA.NVIDIAGeForceRTX2080SUPER.Featurelevel110.cs exists
+% - PostFX Manager - Executing core/scripts/client/postFx/default.postfxpreset.cs
+% - PostFX Manager - Applying from preset
+% - PostFX Manager - PostFX enabled
+core/scripts/gui/messageBoxes/messageBox.ed.cs (23): string always evaluates to 0.
+ % - Initialized Core
+
+--------- Initializing Directory: scripts ---------
+sfxStartup...
+SFXSystem::createDevice - created OpenAL device 'Generic Software'
+   Provider: OpenAL
+   Device: Generic Software
+   Hardware: No
+   Buffers: 16
+
+--------- Initializing Full: Server Scripts ---------
+RPG->Loading RPG Scripts...
+RPG->Codes Loaded.
+RPG->Skills Loaded.
+RPG->Class Loaded.
+RPG->Inventory Loaded.
+RPG->Wear Loaded.
+RPGItem::New->item_padded_armor>4>
+RPGItem::Build->item_padded_armor^4^DEF:16^LVL:1,END:8>
+RPG->Item Loaded.
+RPG->Player Loaded.
+RPG->Loot Loaded.
+RPG->AI Loaded.
+RPG->Combat Loaded.
+RPG->RPG Load Success.
+
+--------- Initializing Full: Client Scripts ---------
+
+--------- Initializing Lighting Systems ---------
+Using Advanced Lighting
+
+
+--------------
+Attempting to set resolution to "1920 1080 false 32 75 4"
+Accepted Mode: 
+--Resolution : 1920 1080
+--Full Screen : No
+--Bits Per Pixel : 32
+--Refresh Rate : 75
+--FSAA Level : 4
+--------------
+RPG_Client->Loading Client RPG Scripts...
+RPG_Client->Inventory Loaded
+RPG_Client->Tab Menu Loaded
+RPG_Client->RPG Client Load Success.
+processBind: unknown device: oculusvr
+UDP initialized on ipv4 IP:0.0.0.0:55611
+Activating DirectInput...
+ % - Initializing Tools
+ % - Initializing Tools Base
+ % - Initializing Base Editor
+ % - Initializing World Editor
+ % - Initializing Sketch Tool
+ - Initializing Datablock Editor
+ % - Initializing Debugger
+ % - Initializing Decal Editor
+ % - Initializing Forest Editor
+ % - Initializing Gui Editor
+ % - Initializing Material Editor
+ % - Initializing Mesh Road Editor
+ % - Initializing Mission Area Editor
+ % - Initializing Navigation Editor
+SimObject::linkNamespaces -- Namespace linkage already in place NavEditorConsoleListener
+ % - Initializing Particle Editor
+ % - Initializing Physics Tools
+No physics plugin exists.
+ % - Initializing River Editor
+ - Initializing Road and Path Editor
+ % - Initializing Shape Editor
+Engine initialized...
+--------------------------------------------------------------------------------
+Module Manager: Started scanning 'X:/TRPG/'...
+Module Manager: Finished scanning 'X:/TRPG/'.
+--------------------------------------------------------------------------------
+Module Manager: Loading group 'Game':
+Module Manager: No modules found for module group 'Game'.
+Win32Window::WindowProc - resetting device due to window size change.
+AntiAliasing has been disabled; it is not compatible with AdvancedLighting.
+Window focus status changed: focus: 1
+Exporting server prefs...
+Exporting client prefs
+Exporting server prefs
