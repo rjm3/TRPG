@@ -9,8 +9,8 @@ function client_exec(%script)
 }
 
 // Dedicated RPG Binds
-GlobalActionMap.bind(keyboard, "tab", clientToggleTabMenu);
-GlobalActionMap.bind(keyboard, "i", clientToggleInventory);
+//GlobalActionMap.bind(keyboard, "tab", clientToggleTabMenu);
+//GlobalActionMap.bind(keyboard, "i", clientToggleInventory);
 GlobalActionMap.bind(keyboard, "lcontrol", toggleControl);
 GlobalActionMap.bind(keyboard, "lshift", toggleShift);
 GlobalActionMap.bind(keyboard, "lalt", toggleAlt);

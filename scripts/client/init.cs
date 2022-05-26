@@ -108,6 +108,7 @@ function initClient()
 
    // Default player key bindings
    exec("./default.bind.cs");
+   exec("./rpg.bind.cs");
 
    if (isFile("./config.cs"))
       exec("./config.cs");
