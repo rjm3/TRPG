@@ -518,7 +518,12 @@ $RemapCount++;
 $RemapName[$RemapCount] = "Bring up Options Dialog";
 $RemapCmd[$RemapCount] = "bringUpOptions";
 $RemapCount++;
-
+$RemapName[$RemapCount] = "Open Inventory";
+$RemapCmd[$RemapCount] = "clientToggleInventory";
+$RemapCount++;
+$RemapName[$RemapCount] = "Open RPG Menu";
+$RemapCmd[$RemapCount] = "clientToggleTabMenu";
+$RemapCount++;
 
 function restoreDefaultMappings()
 {
