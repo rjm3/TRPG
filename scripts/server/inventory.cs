@@ -199,12 +199,12 @@ function ShapeBase::setInventory(%this, %data, %value)
    // Impose inventory limits
    if (%value < 0)
       %value = 0;
-   else
-   {
-      %max = %this.maxInventory(%data);
-      if (%value > %max)
-         %value = %max;
-   }
+   //else
+   //{
+   //   %max = %this.maxInventory(%data);
+   //   if (%value > %max)
+   //      %value = %max;
+   //}
 
    // Set the value and invoke object callbacks
    %name = %data.getName();

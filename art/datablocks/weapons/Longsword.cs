@@ -35,8 +35,6 @@ datablock ShapeBaseImageData(LongswordImage)
    className = "WeaponImage";
 
    item = Longsword;
-   ammo = RyderAmmo;
-   clip = RyderClip;
 
    projectile = BulletProjectile;
    projectileType = Projectile;

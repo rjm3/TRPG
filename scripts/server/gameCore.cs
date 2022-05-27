@@ -661,6 +661,9 @@ function GameCore::loadOut(%game, %player)
    %player.setInventory(DeployableTurret, %player.maxInventory(DeployableTurret));
    %player.addToWeaponCycle(DeployableTurret);
    
+   %player.setInventory(Longsword,1);
+   %player.addToWeaponCycle(Longsword);
+   
    if (%player.getDatablock().mainWeapon.image !$= "")
    {
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
