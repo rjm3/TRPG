@@ -63,3 +63,5 @@ moveMap.bind(gamepad0, "triggerr", gamepadFire);
 moveMap.bind(gamepad0, "triggerl", gamepadAltTrigger);
 moveMap.bind(gamepad0, "btn_start", toggleCamera);
 moveMap.bind(gamepad0, "btn_x", toggleFirstPerson);
+moveMap.bind(keyboard, "tab", clientToggleTabMenu);
+moveMap.bind(keyboard, "i", clientToggleInventory);
