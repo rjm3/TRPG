@@ -21,8 +21,11 @@ datablock ShapeBaseImageData(LongswordImage)
 {
    shapeFile = "art/shapes/weapons/rpg/Longsword.DAE";
    emap = true;
-   imageAnimPrefix = "Pistol";
-   imageAnimPrefixFP = "Pistol";
+   
+   //For modifying player animations based on equipped weapon
+   // See http://docs.garagegames.com/torque-3d/reference/classPlayer.html
+   //imageAnimPrefix = "ls";
+   //imageAnimPrefixFP = "ls";
 
    mountPoint = 0;
    firstPerson = true;
@@ -35,7 +38,7 @@ datablock ShapeBaseImageData(LongswordImage)
    className = "WeaponImage";
 
    item = Longsword;
-
+   infiniteAmmo = true;
    projectile = BulletProjectile;
    projectileType = Projectile;
    projectileSpread = "0.0";
@@ -73,15 +76,17 @@ datablock ShapeBaseImageData(LongswordImage)
    // Initial start up state
    stateName[0]                     = "Preactivate";
    stateTransitionOnLoaded[0]       = "Activate";
-   stateTransitionOnNoAmmo[0]       = "NoAmmo";
+   //stateTransitionOnNoAmmo[0]       = "Activate"; //"NoAmmo";
+
+   //Sword stops working if it gets stuck in a "NoAmmo" state
 
    // Activating the gun.  Called when the weapon is first
    // mounted and there is ammo.
    stateName[1]                     = "Activate";
    stateTransitionGeneric0In[1]     = "SprintEnter";
    stateTransitionOnTimeout[1]      = "Ready";
-   stateTimeoutValue[1]             = 1.5;
-   stateSequence[1]                 = "switch_in";
+   stateTimeoutValue[1]             = 0.5;
+   //stateSequence[1]                 = "switch_in";
    stateSound[1]                    = RyderSwitchinSound;
 
    // Ready to fire, just waiting for the trigger
@@ -90,7 +95,7 @@ datablock ShapeBaseImageData(LongswordImage)
    stateTransitionOnMotion[2]       = "ReadyMotion";
    stateScaleAnimation[2]           = false;
    stateScaleAnimationFP[2]         = false;
-   stateTransitionOnNoAmmo[2]       = "NoAmmo";
+   //stateTransitionOnNoAmmo[2]       = "Fire"; //"NoAmmo";
    stateTransitionOnTriggerDown[2]  = "Fire";
    stateSequence[2]                 = "idle";
 
@@ -103,7 +108,7 @@ datablock ShapeBaseImageData(LongswordImage)
    stateScaleAnimationFP[3]         = false;
    stateSequenceTransitionIn[3]     = true;
    stateSequenceTransitionOut[3]    = true;
-   stateTransitionOnNoAmmo[3]       = "NoAmmo";
+   //stateTransitionOnNoAmmo[3]       = "NoAmmo";
    stateTransitionOnTriggerDown[3]  = "Fire";
    stateSequence[3]                 = "run";
 
@@ -112,7 +117,7 @@ datablock ShapeBaseImageData(LongswordImage)
    stateName[4]                     = "Fire";
    stateTransitionGeneric0In[4]     = "SprintEnter";
    stateTransitionOnTimeout[4]      = "WaitForRelease";
-   stateTimeoutValue[4]             = 0.23;
+   stateTimeoutValue[4]             = 1.0;
    stateWaitForTimeout[4]           = true;
    stateFire[4]                     = true;
    stateRecoil[4]                   = "";
@@ -122,9 +127,9 @@ datablock ShapeBaseImageData(LongswordImage)
    stateSequenceNeverTransition[4]  = true;
    stateSequenceRandomFlash[4]      = true;        // use muzzle flash sequence
    stateScript[4]                   = "onFire";
-   stateEmitter[4]                  = GunFireSmokeEmitter;
-   stateEmitterTime[4]              = 0.025;
-   stateEjectShell[4]               = true;
+   //stateEmitter[4]                  = GunFireSmokeEmitter;
+   //stateEmitterTime[4]              = 0.025;
+   //stateEjectShell[4]               = true;
    stateSound[4]                    = RyderFireSound;
 
    // Wait for the player to release the trigger
@@ -138,7 +143,7 @@ datablock ShapeBaseImageData(LongswordImage)
    // Put another round in the chamber
    stateName[6]                     = "NewRound";
    stateTransitionGeneric0In[6]     = "SprintEnter";
-   stateTransitionOnNoAmmo[6]       = "NoAmmo";
+   //stateTransitionOnNoAmmo[6]       = "NoAmmo";
    stateTransitionOnTimeout[6]      = "Ready";
    stateWaitForTimeout[6]           = "0";
    stateTimeoutValue[6]             = 0.05;
