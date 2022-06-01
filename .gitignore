@@ -1,0 +1,4 @@
+**/*.cached.dts
+art/shapes/actors/rpg/Anims/BaseReady.cached.dts
+art/shapes/actors/rpg/Anims/BaseRun.cached.dts
+console.log

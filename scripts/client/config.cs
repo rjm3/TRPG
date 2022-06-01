@@ -43,6 +43,8 @@ moveMap.bind(keyboard, "f8", dropCameraAtPlayer);
 moveMap.bind(keyboard, "f7", dropPlayerAtCamera);
 moveMap.bindCmd(keyboard, "n", "toggleNetGraph();", "");
 moveMap.bindCmd(keyboard, "ctrl z", "carjack();", "");
+moveMap.bind(keyboard, "tab", clientToggleTabMenu);
+moveMap.bind(keyboard, "i", clientToggleInventory);
 moveMap.bind(mouse0, "xaxis", yaw);
 moveMap.bind(mouse0, "yaxis", pitch);
 moveMap.bind(mouse0, "button0", mouseFire);
