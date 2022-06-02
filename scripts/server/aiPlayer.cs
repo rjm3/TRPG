@@ -40,6 +40,11 @@
 // Demo Pathed AIPlayer.
 //-----------------------------------------------------------------------------
 
+datablock PlayerData(DemoPlayer : DefaultPlayerData)
+{
+   shootingDelay = 2000;
+};
+
 function DemoPlayer::onReachDestination(%this,%obj)
 {
    //echo( %obj @ " onReachDestination" );

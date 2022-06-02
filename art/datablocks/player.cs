@@ -487,7 +487,7 @@ datablock PlayerData(DefaultPlayerData)
 
    // Third person shape
    //shapeFile = "art/shapes/actors/Soldier/soldier_rigged.DAE";
-   shapeFile = "art/shapes/actors/rpg/Base2.DAE";
+   shapeFile = "art/shapes/actors/rpg/Base1.DAE";
    cameraMaxDist = 3;
    allowImageStateAnimation = true;
 
@@ -511,7 +511,7 @@ datablock PlayerData(DefaultPlayerData)
    maxFreelookAngle = 3.0;
 
    mass = 120;
-   drag = 1.3;
+   drag = 0;
    maxdrag = 0.4;
    density = 1.1;
    maxDamage = 100;
@@ -552,7 +552,14 @@ datablock PlayerData(DefaultPlayerData)
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = "15";
-   airControl = 0.3;
+   airControl = 0;
+
+   jetJumpForce = 100.0;
+   jetJumpEnergyDrain = 0;
+   jetMinJumpEnergy = 0;
+   jetJumpSurfaceAngle = 78;
+   jetMinJumpSpeed = 0;
+   jetMaxJumpSpeed = 100.0;
 
    fallingSpeedThreshold = -6.0;
 
@@ -609,11 +616,11 @@ datablock PlayerData(DefaultPlayerData)
 
    horizMaxSpeed = 68;
    horizResistSpeed = 33;
-   horizResistFactor = 0.35;
+   horizResistFactor = 0;
 
    upMaxSpeed = 80;
    upResistSpeed = 25;
-   upResistFactor = 0.3;
+   upResistFactor = 0;
 
    footstepSplashHeight = 0.35;
 

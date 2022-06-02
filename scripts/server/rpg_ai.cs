@@ -2,8 +2,10 @@
 
 function RPGAI::Spawn() 
 {
-	%ai_player = AIPlayer::spawnAtLocation("Goblin Runt", "-923 -2697 175.5");
-	RPG::DefaultPlayer(%ai_player);
+    //338.668 287.218 104.269
+	%ai_player = AIPlayer::spawnAtLocation("GoblinRunt","338.668 287.218 106.269"); //"-923 -2697 175.5");
+    echo(%ai_player);
+	RPGPlayer::DefaultPlayer(%ai_player);
 	%ai_player.mountImage(LurkerWeaponImage, 0);
 	%ai_player.setInventory(LurkerAmmo, 128);
 }

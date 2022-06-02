@@ -34,23 +34,15 @@ datablock ShapeBaseImageData(LongswordImage)
 
    correctMuzzleVector = true;
 
-   class = "WeaponImage";
-   className = "WeaponImage";
+   class = "MeleeWeaponImage";
+   className = "MeleeWeaponImage";
 
    item = Longsword;
+   weaponName = 'Longsword';
+   meleeRange = 5.0;
+   hitDetectRaycast = true;
+   
    infiniteAmmo = true;
-   projectile = BulletProjectile;
-   projectileType = Projectile;
-   projectileSpread = "0.0";
-
-   altProjectile = GrenadeLauncherProjectile;
-   altProjectileSpread = "0.02";
-
-   casing = BulletShell;
-   shellExitDir        = "1.0 0.3 1.0";
-   shellExitOffset     = "0.15 -0.56 -0.1";
-   shellExitVariance   = 15.0;
-   shellVelocity       = 3.0;
 
    // Weapon lights up while firing
    lightType = "WeaponFireLight";

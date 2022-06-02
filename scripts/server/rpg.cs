@@ -20,6 +20,7 @@ $RPGEchoPlayer = true;
 $RPGEchoInventory = true;
 $RPGEchoLoot = true;
 $RPGEchoWear = true;
+$RPGEchoWeapon = true;
 function rpgecho(%script, %func, %arg_0, %arg_1, %arg_2, %arg_3, %arg_4, %arg_5, %arg_6, %arg_7)
 {
 	if (%script != true)

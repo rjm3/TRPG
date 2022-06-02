@@ -26,5 +26,9 @@
 
 datablock PlayerData(DemoPlayer : DefaultPlayerData)
 {
+   shapeFile = "art/shapes/actors/Soldier/soldier_rigged.DAE";
+   // First person arms
+   imageAnimPrefixFP = "soldier";
+   shapeNameFP[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
    shootingDelay = 2000;
 };

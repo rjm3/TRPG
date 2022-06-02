@@ -20,662 +20,446 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------
-// Player Audio Profiles
-//----------------------------------------------------------------------------
+// Timeouts for corpse deletion.
+$CorpseTimeoutValue = 45 * 1000;
 
-datablock SFXProfile(DeathCrySound)
-{
-   fileName = "art/sound/orc_death";
-   description = AudioClose3d;
-   preload = true;
-};
-
-datablock SFXProfile(PainCrySound)
-{
-   fileName = "art/sound/orc_pain";
-   description = AudioClose3d;
-   preload = true;
-};
 
 //----------------------------------------------------------------------------
-
-datablock SFXProfile(FootLightSoftSound)
-{
-   filename    = "art/sound/lgtStep_mono_01";
-   description = AudioClosest3d;
-   preload = true;
-};
-
-datablock SFXProfile(FootLightHardSound)
-{
-   filename    = "art/sound/hvystep_ mono_01";
-   description = AudioClose3d;
-   preload = true;
-};
-
-datablock SFXProfile(FootLightMetalSound)
-{
-   filename    = "art/sound/metalstep_mono_01";
-   description = AudioClose3d;
-   preload = true;
-};
-
-datablock SFXProfile(FootLightSnowSound)
-{
-   filename    = "art/sound/snowstep_mono_01";
-   description = AudioClosest3d;
-   preload = true;
-};
-
-datablock SFXProfile(FootLightShallowSplashSound)
-{
-   filename    = "art/sound/waterstep_mono_01";
-   description = AudioClose3d;
-   preload = true;
-};
-
-datablock SFXProfile(FootLightWadingSound)
-{
-   filename    = "art/sound/waterstep_mono_01";
-   description = AudioClose3d;
-   preload = true;
-};
-
-datablock SFXProfile(FootLightUnderwaterSound)
-{
-   filename    = "art/sound/waterstep_mono_01";
-   description = AudioClosest3d;
-   preload = true;
-};
-
-//----------------------------------------------------------------------------
-// Splash
+// Player Datablock methods
 //----------------------------------------------------------------------------
 
-datablock ParticleData(PlayerSplashMist)
+function PlayerData::onAdd(%this, %obj)
 {
-   dragCoefficient      = 2.0;
-   gravityCoefficient   = -0.05;
-   inheritedVelFactor   = 0.0;
-   constantAcceleration = 0.0;
-   lifetimeMS           = 400;
-   lifetimeVarianceMS   = 100;
-   useInvAlpha          = false;
-   spinRandomMin        = -90.0;
-   spinRandomMax        = 500.0;
-   textureName          = "art/shapes/actors/common/splash";
-   colors[0]     = "0.7 0.8 1.0 1.0";
-   colors[1]     = "0.7 0.8 1.0 0.5";
-   colors[2]     = "0.7 0.8 1.0 0.0";
-   sizes[0]      = 0.5;
-   sizes[1]      = 0.5;
-   sizes[2]      = 0.8;
-   times[0]      = 0.0;
-   times[1]      = 0.5;
-   times[2]      = 1.0;
-};
+   // Vehicle timeout
+   %obj.mountVehicle = true;
 
-datablock ParticleEmitterData(PlayerSplashMistEmitter)
+   // Default dynamic armor stats
+   %obj.setRechargeRate(%this.rechargeRate);
+   %obj.setRepairRate(0);
+}
+
+function PlayerData::onRemove(%this, %obj)
 {
-   ejectionPeriodMS = 5;
-   periodVarianceMS = 0;
-   ejectionVelocity = 3.0;
-   velocityVariance = 2.0;
-   ejectionOffset   = 0.0;
-   thetaMin         = 85;
-   thetaMax         = 85;
-   phiReferenceVel  = 0;
-   phiVariance      = 360;
-   overrideAdvance = false;
-   lifetimeMS       = 250;
-   particles = "PlayerSplashMist";
-};
+   if (%obj.client.player == %obj)
+      %obj.client.player = 0;
+}
 
-
-datablock ParticleData(PlayerBubbleParticle)
+function PlayerData::onNewDataBlock(%this, %obj)
 {
-   dragCoefficient      = 0.0;
-   gravityCoefficient   = -0.50;
-   inheritedVelFactor   = 0.0;
-   constantAcceleration = 0.0;
-   lifetimeMS           = 400;
-   lifetimeVarianceMS   = 100;
-   useInvAlpha          = false;
-   textureName          = "art/shapes/actors/common/splash";
-   colors[0]     = "0.7 0.8 1.0 0.4";
-   colors[1]     = "0.7 0.8 1.0 0.4";
-   colors[2]     = "0.7 0.8 1.0 0.0";
-   sizes[0]      = 0.1;
-   sizes[1]      = 0.3;
-   sizes[2]      = 0.3;
-   times[0]      = 0.0;
-   times[1]      = 0.5;
-   times[2]      = 1.0;
-};
-
-datablock ParticleEmitterData(PlayerBubbleEmitter)
-{
-   ejectionPeriodMS = 1;
-   periodVarianceMS = 0;
-   ejectionVelocity = 2.0;
-   ejectionOffset   = 0.5;
-   velocityVariance = 0.5;
-   thetaMin         = 0;
-   thetaMax         = 80;
-   phiReferenceVel  = 0;
-   phiVariance      = 360;
-   overrideAdvance = false;
-   particles = "PlayerBubbleParticle";
-};
-
-datablock ParticleData(PlayerFoamParticle)
-{
-   dragCoefficient      = 2.0;
-   gravityCoefficient   = -0.05;
-   inheritedVelFactor   = 0.1;
-   constantAcceleration = 0.0;
-   lifetimeMS           = 600;
-   lifetimeVarianceMS   = 100;
-   useInvAlpha          = false;
-   spinRandomMin        = -90.0;
-   spinRandomMax        = 500.0;
-   textureName          = "art/particles/millsplash01";
-   colors[0]     = "0.7 0.8 1.0 0.20";
-   colors[1]     = "0.7 0.8 1.0 0.20";
-   colors[2]     = "0.7 0.8 1.0 0.00";
-   sizes[0]      = 0.2;
-   sizes[1]      = 0.4;
-   sizes[2]      = 1.6;
-   times[0]      = 0.0;
-   times[1]      = 0.5;
-   times[2]      = 1.0;
-};
-
-datablock ParticleEmitterData(PlayerFoamEmitter)
-{
-   ejectionPeriodMS = 10;
-   periodVarianceMS = 0;
-   ejectionVelocity = 3.0;
-   velocityVariance = 1.0;
-   ejectionOffset   = 0.0;
-   thetaMin         = 85;
-   thetaMax         = 85;
-   phiReferenceVel  = 0;
-   phiVariance      = 360;
-   overrideAdvance = false;
-   particles = "PlayerFoamParticle";
-};
-
-
-datablock ParticleData( PlayerFoamDropletsParticle )
-{
-   dragCoefficient      = 1;
-   gravityCoefficient   = 0.2;
-   inheritedVelFactor   = 0.2;
-   constantAcceleration = -0.0;
-   lifetimeMS           = 600;
-   lifetimeVarianceMS   = 0;
-   textureName          = "art/shapes/actors/common/splash";
-   colors[0]     = "0.7 0.8 1.0 1.0";
-   colors[1]     = "0.7 0.8 1.0 0.5";
-   colors[2]     = "0.7 0.8 1.0 0.0";
-   sizes[0]      = 0.8;
-   sizes[1]      = 0.3;
-   sizes[2]      = 0.0;
-   times[0]      = 0.0;
-   times[1]      = 0.5;
-   times[2]      = 1.0;
-};
-
-datablock ParticleEmitterData( PlayerFoamDropletsEmitter )
-{
-   ejectionPeriodMS = 7;
-   periodVarianceMS = 0;
-   ejectionVelocity = 2;
-   velocityVariance = 1.0;
-   ejectionOffset   = 0.0;
-   thetaMin         = 60;
-   thetaMax         = 80;
-   phiReferenceVel  = 0;
-   phiVariance      = 360;
-   overrideAdvance = false;
-   orientParticles  = true;
-   particles = "PlayerFoamDropletsParticle";
-};
-
-datablock ParticleData( PlayerWakeParticle )
-{
-   textureName          = "art/particles/wake";
-   dragCoefficient     = "0.0";
-   gravityCoefficient   = "0.0";
-   inheritedVelFactor   = "0.0";
-   lifetimeMS           = "2500";
-   lifetimeVarianceMS   = "200";
-   windCoefficient = "0.0";
-   useInvAlpha = "1";
-   spinRandomMin = "30.0";
-   spinRandomMax = "30.0";
-
-   animateTexture = true;
-   framesPerSec = 1;
-   animTexTiling = "2 1";
-   animTexFrames = "0 1";
-
-   colors[0]     = "1 1 1 0.1";
-   colors[1]     = "1 1 1 0.7";
-   colors[2]     = "1 1 1 0.3";
-   colors[3]     = "0.5 0.5 0.5 0";
-
-   sizes[0]      = "1.0";
-   sizes[1]      = "2.0";
-   sizes[2]      = "3.0";
-   sizes[3]      = "3.5";
-
-   times[0]      = "0.0";
-   times[1]      = "0.25";
-   times[2]      = "0.5";
-   times[3]      = "1.0";
-};
-
-datablock ParticleEmitterData( PlayerWakeEmitter )
-{
-   ejectionPeriodMS = "200";
-   periodVarianceMS = "10";
-
-   ejectionVelocity = "0";
-   velocityVariance = "0";
-
-   ejectionOffset   = "0";
-
-   thetaMin         = "89";
-   thetaMax         = "90";
-
-   phiReferenceVel  = "0";
-   phiVariance      = "1";
-
-   alignParticles = "1";
-   alignDirection = "0 0 1";
-
-   particles = "PlayerWakeParticle";
-};
-
-datablock ParticleData( PlayerSplashParticle )
-{
-   dragCoefficient      = 1;
-   gravityCoefficient   = 0.2;
-   inheritedVelFactor   = 0.2;
-   constantAcceleration = -0.0;
-   lifetimeMS           = 600;
-   lifetimeVarianceMS   = 0;
-   colors[0]     = "0.7 0.8 1.0 1.0";
-   colors[1]     = "0.7 0.8 1.0 0.5";
-   colors[2]     = "0.7 0.8 1.0 0.0";
-   sizes[0]      = 0.5;
-   sizes[1]      = 0.5;
-   sizes[2]      = 0.5;
-   times[0]      = 0.0;
-   times[1]      = 0.5;
-   times[2]      = 1.0;
-};
-
-datablock ParticleEmitterData( PlayerSplashEmitter )
-{
-   ejectionPeriodMS = 1;
-   periodVarianceMS = 0;
-   ejectionVelocity = 3;
-   velocityVariance = 1.0;
-   ejectionOffset   = 0.0;
-   thetaMin         = 60;
-   thetaMax         = 80;
-   phiReferenceVel  = 0;
-   phiVariance      = 360;
-   overrideAdvance = false;
-   orientParticles  = true;
-   lifetimeMS       = 100;
-   particles = "PlayerSplashParticle";
-};
-
-datablock SplashData(PlayerSplash)
-{
-   numSegments = 15;
-   ejectionFreq = 15;
-   ejectionAngle = 40;
-   ringLifetime = 0.5;
-   lifetimeMS = 300;
-   velocity = 4.0;
-   startRadius = 0.0;
-   acceleration = -3.0;
-   texWrap = 5.0;
-
-   texture = "art/particles/millsplash01";
-
-   emitter[0] = PlayerSplashEmitter;
-   emitter[1] = PlayerSplashMistEmitter;
-
-   colors[0] = "0.7 0.8 1.0 0.0";
-   colors[1] = "0.7 0.8 1.0 0.3";
-   colors[2] = "0.7 0.8 1.0 0.7";
-   colors[3] = "0.7 0.8 1.0 0.0";
-   times[0] = 0.0;
-   times[1] = 0.4;
-   times[2] = 0.8;
-   times[3] = 1.0;
-};
-
-//----------------------------------------------------------------------------
-// Foot puffs
-//----------------------------------------------------------------------------
-
-datablock ParticleData(LightPuff)
-{
-   dragCoefficient      = 2.0;
-   gravityCoefficient   = -0.01;
-   inheritedVelFactor   = 0.6;
-   constantAcceleration = 0.0;
-   lifetimeMS           = 800;
-   lifetimeVarianceMS   = 100;
-   useInvAlpha          = true;
-   spinRandomMin        = -35.0;
-   spinRandomMax        = 35.0;
-   colors[0]     = "1.0 1.0 1.0 1.0";
-   colors[1]     = "1.0 1.0 1.0 0.0";
-   sizes[0]      = 0.1;
-   sizes[1]      = 0.8;
-   times[0]      = 0.3;
-   times[1]      = 1.0;
-   times[2] = 1.0;
-   textureName = "art/particles/dustParticle.png";
-};
-
-datablock ParticleEmitterData(LightPuffEmitter)
-{
-   ejectionPeriodMS = 35;
-   periodVarianceMS = 10;
-   ejectionVelocity = 0.2;
-   velocityVariance = 0.1;
-   ejectionOffset   = 0.0;
-   thetaMin         = 20;
-   thetaMax         = 60;
-   phiReferenceVel  = 0;
-   phiVariance      = 360;
-   overrideAdvance = false;
-   useEmitterColors = true;
-   particles = "LightPuff";
-};
-
-//----------------------------------------------------------------------------
-// Liftoff dust
-//----------------------------------------------------------------------------
-
-datablock ParticleData(LiftoffDust)
-{
-   dragCoefficient      = 1.0;
-   gravityCoefficient   = -0.01;
-   inheritedVelFactor   = 0.0;
-   constantAcceleration = 0.0;
-   lifetimeMS           = 1000;
-   lifetimeVarianceMS   = 100;
-   useInvAlpha          = true;
-   spinRandomMin        = -90.0;
-   spinRandomMax        = 500.0;
-   colors[0]     = "1.0 1.0 1.0 1.0";
-   sizes[0]      = 1.0;
-   times[0]      = 1.0;
-   textureName = "art/particles/dustParticle";
-};
-
-datablock ParticleEmitterData(LiftoffDustEmitter)
-{
-   ejectionPeriodMS = 5;
-   periodVarianceMS = 0;
-   ejectionVelocity = 2.0;
-   velocityVariance = 0.0;
-   ejectionOffset   = 0.0;
-   thetaMin         = 90;
-   thetaMax         = 90;
-   phiReferenceVel  = 0;
-   phiVariance      = 360;
-   overrideAdvance = false;
-   useEmitterColors = true;
-   particles = "LiftoffDust";
-};
+}
 
 //----------------------------------------------------------------------------
 
-datablock DecalData(PlayerFootprint)
+function PlayerData::onMount(%this, %obj, %vehicle, %node)
 {
-   size = 0.4;
-   material = CommonPlayerFootprint;
-};
+   // Node 0 is the pilot's position, we need to dismount his weapon.
+   if (%node == 0)
+   {
+      %obj.setTransform("0 0 0 0 0 1 0");
+      %obj.setActionThread(%vehicle.getDatablock().mountPose[%node], true, true);
 
-datablock DebrisData( PlayerDebris )
+      %obj.lastWeapon = %obj.getMountedImage($WeaponSlot);
+      %obj.unmountImage($WeaponSlot);
+
+      %obj.setControlObject(%vehicle);
+      
+      if(%obj.getClassName() $= "Player")
+         commandToClient(%obj.client, 'toggleVehicleMap', true);
+   }
+   else
+   {
+      if (%vehicle.getDataBlock().mountPose[%node] !$= "")
+         %obj.setActionThread(%vehicle.getDatablock().mountPose[%node]);
+      else
+         %obj.setActionThread("root", true);
+   }
+}
+
+function PlayerData::onUnmount(%this, %obj, %vehicle, %node)
 {
-   explodeOnMaxBounce = false;
+   if (%node == 0)
+   {
+      %obj.mountImage(%obj.lastWeapon, $WeaponSlot);
+      %obj.setControlObject("");
+   }
+}
 
-   elasticity = 0.15;
-   friction = 0.5;
+function PlayerData::doDismount(%this, %obj, %forced)
+{
+   //echo("\c4PlayerData::doDismount(" @ %this @", "@ %obj.client.nameBase @", "@ %forced @")");
 
-   lifetime = 4.0;
-   lifetimeVariance = 0.0;
+   // This function is called by player.cc when the jump trigger
+   // is true while mounted
+   %vehicle = %obj.mVehicle;
+   if (!%obj.isMounted() || !isObject(%vehicle))
+      return;
 
-   minSpinSpeed = 40;
-   maxSpinSpeed = 600;
+   // Vehicle must be at rest!
+   if ((VectorLen(%vehicle.getVelocity()) <= %vehicle.getDataBlock().maxDismountSpeed ) || %forced)
+   {
+      // Position above dismount point
+      %pos = getWords(%obj.getTransform(), 0, 2);
+      %rot = getWords(%obj.getTransform(), 3, 6);
+      %oldPos = %pos;
+      %vec[0] = " -1 0 0";
+      %vec[1] = " 0 0 1";
+      %vec[2] = " 0 0 -1";
+      %vec[3] = " 1 0 0";
+      %vec[4] = "0 -1 0";
+      %impulseVec = "0 0 0";
+      %vec[0] = MatrixMulVector(%obj.getTransform(), %vec[0]);
 
-   numBounces = 5;
-   bounceVariance = 0;
+      // Make sure the point is valid
+      %pos = "0 0 0";
+      %numAttempts = 5;
+      %success = -1;
+      for (%i = 0; %i < %numAttempts; %i++)
+      {
+         %pos = VectorAdd(%oldPos, VectorScale(%vec[%i], 3));
+         if (%obj.checkDismountPoint(%oldPos, %pos))
+         {
+            %success = %i;
+            %impulseVec = %vec[%i];
+            break;
+         }
+      }
+      if (%forced && %success == -1)
+         %pos = %oldPos;
 
-   staticOnMaxBounce = true;
-   gravModifier = 1.0;
+      %obj.mountVehicle = false;
+      %obj.schedule(4000, "mountVehicles", true);
 
-   useRadiusMass = true;
-   baseRadius = 1;
+      // Position above dismount point
+      %obj.unmount();
+      %obj.setTransform(%pos SPC %rot);//%obj.setTransform(%pos);
+      //%obj.playAudio(0, UnmountVehicleSound);
+      %obj.applyImpulse(%pos, VectorScale(%impulseVec, %obj.getDataBlock().mass));
 
-   velocity = 20.0;
-   velocityVariance = 12.0;
-};
+      // Set player velocity when ejecting
+      %vel = %obj.getVelocity();
+      %vec = vectorDot( %vel, vectorNormalize(%vel));
+      if(%vec > 50)
+      {
+         %scale = 50 / %vec;
+         %obj.setVelocity(VectorScale(%vel, %scale));
+      }
+
+      //%obj.vehicleTurret = "";
+   }
+   else
+      messageClient(%obj.client, 'msgUnmount', '\c2Cannot exit %1 while moving.', %vehicle.getDataBlock().nameTag);
+}
+
+//----------------------------------------------------------------------------
+
+function PlayerData::onCollision(%this, %obj, %col)
+{
+   if (!isObject(%col) || %obj.getState() $= "Dead")
+      return;
+
+   // Try and pickup all items
+   if (%col.getClassName() $= "Item")
+   {
+      %obj.pickup(%col);
+      return;
+   }
+
+   // Mount vehicles
+   if (%col.getType() & $TypeMasks::GameBaseObjectType)
+   {
+      %db = %col.getDataBlock();
+      if ((%db.getClassName() $= "WheeledVehicleData" ) && %obj.mountVehicle && %obj.getState() $= "Move" && %col.mountable)
+      {
+         // Only mount drivers for now.
+         ServerConnection.setFirstPerson(0);
+         
+         // For this specific example, only one person can fit
+         // into a vehicle
+         %mount = %col.getMountNodeObject(0);         
+         if(%mount)
+            return;
+         
+         // For this specific FPS Example, always mount the player
+         // to node 0
+         %node = 0;
+         %col.mountObject(%obj, %node);
+         %obj.mVehicle = %col;
+      }
+   }
+}
+
+function PlayerData::onImpact(%this, %obj, %collidedObject, %vec, %vecLen)
+{
+   %obj.damage(0, VectorAdd(%obj.getPosition(), %vec), %vecLen * %this.speedDamageScale, "Impact");
+}
+
+//----------------------------------------------------------------------------
+
+function PlayerData::damage(%this, %obj, %sourceObject, %position, %damage, %damageType)
+{
+   if (!isObject(%obj) || %obj.getState() $= "Dead" || !%damage)
+      return;
+
+   %obj.applyDamage(%damage);
+
+   %location = "Body";
+
+   // Deal with client callbacks here because we don't have this
+   // information in the onDamage or onDisable methods
+   %client = %obj.client;
+   %sourceClient = %sourceObject ? %sourceObject.client : 0;
+
+   if (isObject(%client))
+   {
+      // Determine damage direction
+      if (%damageType !$= "Suicide")
+         %obj.setDamageDirection(%sourceObject, %position);
+
+      if (%obj.getState() $= "Dead")
+         %client.onDeath(%sourceObject, %sourceClient, %damageType, %location);
+   }
+}
+
+function PlayerData::onDamage(%this, %obj, %delta)
+{
+   // This method is invoked by the ShapeBase code whenever the
+   // object's damage level changes.
+   if (%delta > 0 && %obj.getState() !$= "Dead")
+   {
+      // Apply a damage flash
+      %obj.setDamageFlash(1);
+
+      // If the pain is excessive, let's hear about it.
+      if (%delta > 10)
+         %obj.playPain();
+   }
+}
 
 // ----------------------------------------------------------------------------
-// This is our default player datablock that all others will derive from.
+// The player object sets the "disabled" state when damage exceeds it's
+// maxDamage value. This is method is invoked by ShapeBase state mangement code.
+
+// If we want to deal with the damage information that actually caused this
+// death, then we would have to move this code into the script "damage" method.
+
+function PlayerData::onDisabled(%this, %obj, %state)
+{
+   // Release the main weapon trigger
+   %obj.setImageTrigger(0, false);
+
+   // Toss current mounted weapon and ammo if any
+   %item = %obj.getMountedImage($WeaponSlot).item;
+   if (isObject(%item))
+   {
+      %amount = %obj.getInventory(%item.image.ammo);
+      
+      if (!%item.image.clip)
+         warn("No clip exists to throw for item ", %item);
+      if(%amount)
+         %obj.throw(%item.image.clip, 1);
+   }
+
+   // Toss out a health patch
+   %obj.tossPatch();
+
+   %obj.playDeathCry();
+   %obj.playDeathAnimation();
+   //%obj.setDamageFlash(0.75);
+
+   // Disable any vehicle map
+   commandToClient(%obj.client, 'toggleVehicleMap', false);
+
+   // Schedule corpse removal. Just keeping the place clean.
+   %obj.schedule($CorpseTimeoutValue - 1000, "startFade", 1000, 0, true);
+   %obj.schedule($CorpseTimeoutValue, "delete");
+}
+
+//-----------------------------------------------------------------------------
+
+function PlayerData::onLeaveMissionArea(%this, %obj)
+{
+   //echo("\c4Leaving Mission Area at POS:"@ %obj.getPosition());
+
+   // Inform the client
+   %obj.client.onLeaveMissionArea();
+
+   // Damage over time and kill the coward!
+   //%obj.setDamageDt(0.2, "MissionAreaDamage");
+}
+
+function PlayerData::onEnterMissionArea(%this, %obj)
+{
+   //echo("\c4Entering Mission Area at POS:"@ %obj.getPosition());
+
+   // Inform the client
+   %obj.client.onEnterMissionArea();
+
+   // Stop the punishment
+   //%obj.clearDamageDt();
+}
+
+//-----------------------------------------------------------------------------
+
+function PlayerData::onEnterLiquid(%this, %obj, %coverage, %type)
+{
+   //echo("\c4this:"@ %this @" object:"@ %obj @" just entered water of type:"@ %type @" for "@ %coverage @"coverage");
+}
+
+function PlayerData::onLeaveLiquid(%this, %obj, %type)
+{
+   //
+}
+
+//-----------------------------------------------------------------------------
+
+function PlayerData::onTrigger(%this, %obj, %triggerNum, %val)
+{
+   // This method is invoked when the player receives a trigger move event.
+   // The player automatically triggers slot 0 and slot one off of triggers #
+   // 0 & 1.  Trigger # 2 is also used as the jump key.
+}
+
+//-----------------------------------------------------------------------------
+
+function PlayerData::onPoseChange(%this, %obj, %oldPose, %newPose)
+{
+   // Set the script anim prefix to be that of the current pose
+   %obj.setImageScriptAnimPrefix( $WeaponSlot, addTaggedString(%newPose) );
+}
+
+//-----------------------------------------------------------------------------
+
+function PlayerData::onStartSprintMotion(%this, %obj)
+{
+   %obj.setImageGenericTrigger($WeaponSlot, 0, true);
+}
+
+function PlayerData::onStopSprintMotion(%this, %obj)
+{
+   %obj.setImageGenericTrigger($WeaponSlot, 0, false);
+}
+
+//-----------------------------------------------------------------------------
+// Player methods
+//-----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+
+function Player::kill(%this, %damageType)
+{
+   %this.damage(0, %this.getPosition(), 10000, %damageType);
+}
+
+//----------------------------------------------------------------------------
+
+function Player::mountVehicles(%this, %bool)
+{
+   // If set to false, this variable disables vehicle mounting.
+   %this.mountVehicle = %bool;
+}
+
+function Player::isPilot(%this)
+{
+   %vehicle = %this.getObjectMount();
+   // There are two "if" statements to avoid a script warning.
+   if (%vehicle)
+      if (%vehicle.getMountNodeObject(0) == %this)
+         return true;
+   return false;
+}
+
+//----------------------------------------------------------------------------
+
+function Player::playDeathAnimation(%this)
+{
+   %numDeathAnimations = %this.getNumDeathAnimations();
+   if ( %numDeathAnimations > 0 )
+   {
+      if (isObject(%this.client))
+      {
+         if (%this.client.deathIdx++ > %numDeathAnimations)
+            %this.client.deathIdx = 1;
+         %this.setActionThread("Death" @ %this.client.deathIdx);
+      }
+      else
+      {
+         %rand = getRandom(1, %numDeathAnimations);
+         %this.setActionThread("Death" @ %rand);
+      }
+   }
+}
+
+function Player::playCelAnimation(%this, %anim)
+{
+   if (%this.getState() !$= "Dead")
+      %this.setActionThread("cel"@%anim);
+}
+
+
+//----------------------------------------------------------------------------
+
+function Player::playDeathCry(%this)
+{
+   %this.playAudio(0, DeathCrySound);
+}
+
+function Player::playPain(%this)
+{
+   %this.playAudio(0, PainCrySound);
+}
+
 // ----------------------------------------------------------------------------
 
-datablock PlayerData(DefaultPlayerData)
+function Player::setDamageDirection(%player, %sourceObject, %damagePos)
 {
-   renderFirstPerson = false;
-   firstPersonShadows = true;
-   computeCRC = false;
+   if (isObject(%sourceObject))
+   {
+      if (%sourceObject.isField(initialPosition))
+      {
+         // Projectiles have this field set to the muzzle point of
+         // the firing weapon at the time the projectile was created.
+         // This gives a damage direction towards the firing player,
+         // turret, vehicle, etc.  Bullets and weapon fired grenades
+         // are examples of projectiles.
+         %damagePos = %sourceObject.initialPosition;
+      }
+      else
+      {
+         // Other objects that cause damage, such as mines, use their own
+         // location as the damage position.  This gives a damage direction
+         // towards the explosive origin rather than the person that lay the
+         // explosives.
+         %damagePos = %sourceObject.getPosition();
+      }
+   }
 
-   // Third person shape
-   //shapeFile = "art/shapes/actors/Soldier/soldier_rigged.DAE";
-   shapeFile = "art/shapes/actors/rpg/Base1.DAE";
-   cameraMaxDist = 3;
-   allowImageStateAnimation = true;
+   // Rotate damage vector into object space
+   %damageVec = VectorSub(%damagePos, %player.getWorldBoxCenter());
+   %damageVec = VectorNormalize(%damageVec);
+   %damageVec = MatrixMulVector(%player.client.getCameraObject().getInverseTransform(), %damageVec);
 
-   // First person arms
-   //imageAnimPrefixFP = "soldier";
-   //shapeNameFP[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
+   // Determine largest component of damage vector to get direction
+   %vecComponents = -%damageVec.x SPC %damageVec.x SPC -%damageVec.y SPC %damageVec.y SPC -%damageVec.z SPC %damageVec.z;
+   %vecDirections = "Left"        SPC "Right"      SPC "Bottom"      SPC "Front"      SPC "Bottom"      SPC "Top";
 
-   cmdCategory = "Clients";
+   %max = -1;
+   for (%i = 0; %i < 6; %i++)
+   {
+      %value = getWord(%vecComponents, %i);
+      if (%value > %max)
+      {
+         %max = %value;
+         %damageDir = getWord(%vecDirections, %i);
+      }
+   }
+   commandToClient(%player.client, 'setDamageDirection', %damageDir);
+}
 
-   cameraDefaultFov = 55.0;
-   cameraMinFov = 5.0;
-   cameraMaxFov = 65.0;
+function Player::use(%player, %data)
+{
+   // No mounting/using weapons when you're driving!
+   if (%player.isPilot())
+      return(false);
 
-   debrisShapeName = "art/shapes/actors/common/debris_player.dts";
-   debris = playerDebris;
-   
-   throwForce = 30;
-
-   minLookAngle = "-1.4";
-   maxLookAngle = "0.9";
-   maxFreelookAngle = 3.0;
-
-   mass = 120;
-   drag = 0;
-   maxdrag = 0.4;
-   density = 1.1;
-   maxDamage = 100;
-   maxEnergy =  60;
-   repairRate = 0.33;
-
-   rechargeRate = 0.256;
-
-   runForce = 4320;
-   runEnergyDrain = 0;
-   minRunEnergy = 0;
-   maxForwardSpeed = 8;
-   maxBackwardSpeed = 6;
-   maxSideSpeed = 6;
-
-   sprintForce = 4320;
-   sprintEnergyDrain = 0;
-   minSprintEnergy = 0;
-   maxSprintForwardSpeed = 14;
-   maxSprintBackwardSpeed = 8;
-   maxSprintSideSpeed = 6;
-   sprintStrafeScale = 0.25;
-   sprintYawScale = 0.05;
-   sprintPitchScale = 0.05;
-   sprintCanJump = true;
-
-   crouchForce = 405;
-   maxCrouchForwardSpeed = 4.0;
-   maxCrouchBackwardSpeed = 2.0;
-   maxCrouchSideSpeed = 2.0;
-
-   swimForce = 4320;
-   maxUnderwaterForwardSpeed = 8.4;
-   maxUnderwaterBackwardSpeed = 7.8;
-   maxUnderwaterSideSpeed = 4.0;
-
-   jumpForce = "747";
-   jumpEnergyDrain = 0;
-   minJumpEnergy = 0;
-   jumpDelay = "15";
-   airControl = 0;
-
-   jetJumpForce = 100.0;
-   jetJumpEnergyDrain = 0;
-   jetMinJumpEnergy = 0;
-   jetJumpSurfaceAngle = 78;
-   jetMinJumpSpeed = 0;
-   jetMaxJumpSpeed = 100.0;
-
-   fallingSpeedThreshold = -6.0;
-
-   landSequenceTime = 0.33;
-   transitionToLand = false;
-   recoverDelay = 0;
-   recoverRunForceScale = 0;
-
-   minImpactSpeed = 10;
-   minLateralImpactSpeed = 20;
-   speedDamageScale = 0.4;
-
-   boundingBox = "0.65 0.75 1.85";
-   crouchBoundingBox = "0.65 0.75 1.3";
-   swimBoundingBox = "1 2 2";
-   pickupRadius = 1;
-
-   // Damage location details
-   boxHeadPercentage       = 0.83;
-   boxTorsoPercentage      = 0.49;
-   boxHeadLeftPercentage         = 0.30;
-   boxHeadRightPercentage        = 0.60;
-   boxHeadBackPercentage         = 0.30;
-   boxHeadFrontPercentage        = 0.60;
-
-   // Foot Prints
-   decalOffset = 0.25;
-
-   footPuffEmitter = "LightPuffEmitter";
-   footPuffNumParts = 10;
-   footPuffRadius = "0.25";
-
-   dustEmitter = "LightPuffEmitter";
-
-   splash = PlayerSplash;
-   splashVelocity = 4.0;
-   splashAngle = 67.0;
-   splashFreqMod = 300.0;
-   splashVelEpsilon = 0.60;
-   bubbleEmitTime = 0.4;
-   splashEmitter[0] = PlayerWakeEmitter;
-   splashEmitter[1] = PlayerFoamEmitter;
-   splashEmitter[2] = PlayerBubbleEmitter;
-   mediumSplashSoundVelocity = 10.0;
-   hardSplashSoundVelocity = 20.0;
-   exitSplashSoundVelocity = 5.0;
-
-   // Controls over slope of runnable/jumpable surfaces
-   runSurfaceAngle  = 38;
-   jumpSurfaceAngle = 80;
-   maxStepHeight = 0.35;  //two meters
-   minJumpSpeed = 20;
-   maxJumpSpeed = 30;
-
-   horizMaxSpeed = 68;
-   horizResistSpeed = 33;
-   horizResistFactor = 0;
-
-   upMaxSpeed = 80;
-   upResistSpeed = 25;
-   upResistFactor = 0;
-
-   footstepSplashHeight = 0.35;
-
-   //NOTE:  some sounds commented out until wav's are available
-
-   // Footstep Sounds
-   FootSoftSound        = FootLightSoftSound;
-   FootHardSound        = FootLightHardSound;
-   FootMetalSound       = FootLightMetalSound;
-   FootSnowSound        = FootLightSnowSound;
-   FootShallowSound     = FootLightShallowSplashSound;
-   FootWadingSound      = FootLightWadingSound;
-   FootUnderwaterSound  = FootLightUnderwaterSound;
-
-   //FootBubblesSound     = FootLightBubblesSound;
-   //movingBubblesSound   = ArmorMoveBubblesSound;
-   //waterBreathSound     = WaterBreathMaleSound;
-
-   //impactSoftSound      = ImpactLightSoftSound;
-   //impactHardSound      = ImpactLightHardSound;
-   //impactMetalSound     = ImpactLightMetalSound;
-   //impactSnowSound      = ImpactLightSnowSound;
-
-   //impactWaterEasy      = ImpactLightWaterEasySound;
-   //impactWaterMedium    = ImpactLightWaterMediumSound;
-   //impactWaterHard      = ImpactLightWaterHardSound;
-
-   groundImpactMinSpeed    = "45";
-   groundImpactShakeFreq   = "4.0 4.0 4.0";
-   groundImpactShakeAmp    = "1.0 1.0 1.0";
-   groundImpactShakeDuration = 0.8;
-   groundImpactShakeFalloff = 10.0;
-
-   //exitingWater         = ExitingWaterLightSound;
-
-
-   cameraMinDist = "0";
-   DecalData = "PlayerFootprint";
-
-   // Allowable Inventory Items
-   mainWeapon = Ryder;
-
-   maxInv[Lurker] = 1;
-   maxInv[LurkerClip] = 20;
-
-   maxInv[LurkerGrenadeLauncher] = 1;
-   maxInv[LurkerGrenadeAmmo] = 20;
-
-   maxInv[Ryder] = 1;
-   maxInv[RyderClip] = 10;
-
-   maxInv[ProxMine] = 5;
-
-   maxInv[DeployableTurret] = 5;
-
-   // available skins (see materials.cs in model folder)
-   availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
-};
+   Parent::use(%player, %data);
+}

@@ -37,6 +37,9 @@ exec("./physicsShape.cs");
 // Load our supporting weapon script, it contains methods used by all weapons.
 exec("./weapon.cs");
 
+// RPG Weapon Stuff
+exec("./rpg_weapon.cs");
+
 // Load our weapon scripts
 // We only need weapon scripts for those weapons that work differently from the
 // class methods defined in weapon.cs
